@@ -1,0 +1,274 @@
+syntax = "proto3";
+
+package com.swisschain.grpc.messages.incoming;
+
+option java_package = "com.swisschain.matching.engine.messages.incoming";
+option java_outer_classname = "IncomingMessages";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+// Responses
+message Response {
+  string id = 1;
+  google.protobuf.StringValue matchingEngineId = 2;
+  Status status = 3;
+  google.protobuf.StringValue statusReason = 4;
+  google.protobuf.StringValue messageId = 5;
+}
+
+message MarketOrderResponse {
+  string id = 1;
+  Status status = 2;
+  google.protobuf.StringValue statusReason = 3;
+  google.protobuf.StringValue price = 4;
+  google.protobuf.StringValue messageId = 5;
+}
+
+message MultiLimitOrderResponse {
+  string id = 1;
+  Status status = 2;
+  google.protobuf.StringValue statusReason = 3;
+  google.protobuf.StringValue assetPairId = 4;
+
+  message OrderStatus {
+    string id = 1;
+    google.protobuf.StringValue matchingEngineId = 2;
+    Status status = 3;
+    google.protobuf.StringValue statusReason = 4;
+    string volume = 5;
+    string price = 6;
+  }
+  repeated OrderStatus statuses = 5;
+  google.protobuf.StringValue messageId = 6;
+}
+
+enum Status {
+  UNKNOWN = 0;
+  MESSAGE_PROCESSING_DISABLED = 1;
+  OK = 2;
+  LOW_BALANCE = 401;
+  DISABLED_ASSET = 403;
+  UNKNOWN_ASSET = 410;
+  DUPLICATE = 430;
+  BAD_REQUEST = 400;
+  RUNTIME = 500;
+
+  REPLACED = 421;
+  NOT_FOUND_PREVIOUS = 422;
+  RESERVED_VOLUME_HIGHER_THAN_BALANCE = 414;
+  LIMIT_ORDER_NOT_FOUND = 415;
+  BALANCE_LOWER_THAN_RESERVED = 416;
+  LEAD_TO_NEGATIVE_SPREAD = 417;
+  TOO_SMALL_VOLUME = 418;
+  INVALID_FEE = 419;
+  INVALID_PRICE = 420;
+  NO_LIQUIDITY = 411;
+  NOT_ENOUGH_FUNDS = 412;
+  INVALID_VOLUME_ACCURACY = 431;
+  INVALID_PRICE_ACCURACY = 432;
+  INVALID_VOLUME = 434;
+  TOO_HIGH_PRICE_DEVIATION = 435;
+  INVALID_ORDER_VALUE = 436;
+  NEGATIVE_OVERDRAFT_LIMIT = 433;
+}
+
+message CashInOutOperation {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetId = 5;
+  string volume = 6;
+  string description = 7;
+  repeated Fee fees = 8;
+  google.protobuf.Timestamp timestamp = 9;
+  google.protobuf.StringValue messageId = 10;
+}
+
+message CashTransferOperation {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string fromWalletId = 4;
+  string toWalletId = 5;
+  string assetId = 6;
+  string volume = 7;
+  string description = 8;
+  google.protobuf.StringValue overdraftLimit = 9;
+  repeated Fee fees = 10;
+  google.protobuf.Timestamp timestamp = 11;
+  google.protobuf.StringValue messageId = 12;
+}
+
+message LimitOrder {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetPairId = 5;
+  string volume = 6;
+  google.protobuf.StringValue price = 7;
+
+  enum LimitOrderType {
+    LIMIT = 0;
+    STOP_LIMIT = 1;
+  }
+  LimitOrderType type = 8;
+  OrderTimeInForce timeInForce = 9;
+  google.protobuf.Timestamp expiryTime = 10;
+
+  google.protobuf.StringValue lowerLimitPrice = 11;
+  google.protobuf.StringValue lowerPrice = 12;
+  google.protobuf.StringValue upperLimitPrice = 13;
+  google.protobuf.StringValue upperPrice = 14;
+
+  google.protobuf.BoolValue cancelAllPreviousLimitOrders = 15;
+  repeated LimitOrderFee fees = 16;
+  google.protobuf.Timestamp timestamp = 17;
+  google.protobuf.StringValue messageId = 18;
+}
+
+enum OrderTimeInForce {
+  GTC = 0;
+  GTD = 1;
+  IOC = 2;
+  FOK = 3;
+}
+
+message MarketOrder {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetPairId = 5;
+  string volume = 6;
+  bool straight = 7;
+  google.protobuf.StringValue reservedLimitVolume = 8;
+  repeated Fee fees = 9;
+  google.protobuf.Timestamp timestamp = 10;
+  google.protobuf.StringValue messageId = 11;
+}
+
+message LimitOrderCancel {
+  string id = 1;
+  string brokerId = 2;
+  repeated string limitOrderId = 3;
+  google.protobuf.StringValue messageId = 4;
+}
+
+message MultiLimitOrderCancel {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetPairId = 5;
+  bool isBuy = 6;
+  google.protobuf.Timestamp timestamp = 7;
+  google.protobuf.StringValue messageId = 8;
+}
+
+message LimitOrderMassCancel {
+  string id = 1;
+  string brokerId = 2;
+  google.protobuf.StringValue walletId = 3;
+  google.protobuf.StringValue assetPairId = 4;
+  google.protobuf.BoolValue isBuy = 5;
+  google.protobuf.StringValue messageId = 6;
+}
+
+message MultiLimitOrder {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetPairId = 5;
+
+  message Order {
+    string id = 1;
+    string volume = 2;
+    string price = 3;
+    repeated LimitOrderFee fees = 4;
+    google.protobuf.StringValue oldId = 5;
+    OrderTimeInForce timeInForce = 6;
+    google.protobuf.Timestamp expiryTime = 7;
+  }
+
+  repeated Order orders = 6;
+  google.protobuf.BoolValue cancelAllPreviousLimitOrders = 7;
+
+  enum CancelMode {
+    NOT_EMPTY_SIDE = 0;
+    BOTH_SIDES = 1;
+    SELL_SIDE = 2;
+    BUY_SIDE = 3;
+  }
+  CancelMode cancelMode = 8;
+
+  google.protobuf.Timestamp timestamp = 9;
+  google.protobuf.StringValue messageId = 10;
+}
+
+message OrderBookSnapshot {
+  string asset = 1;
+  bool isBuy = 2;
+  google.protobuf.Timestamp timestamp = 3;
+
+  message OrderBookLevel {
+    string price = 1;
+    string volume = 2;
+    string walletId = 3;
+    string orderId = 4;
+  }
+
+  repeated OrderBookLevel levels = 4;
+  string brokerId = 5;
+}
+
+message ReservedCashInOutOperation {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetId = 5;
+  string reservedVolume = 6;
+  string description = 7;
+  google.protobuf.Timestamp timestamp = 8;
+  google.protobuf.StringValue messageId = 9;
+}
+
+
+enum FeeType {
+  NO_FEE = 0;
+  CLIENT_FEE = 1;
+  EXTERNAL_FEE = 2;
+}
+
+enum FeeSizeType {
+  PERCENTAGE = 0;
+  ABSOLUTE = 1;
+}
+message Fee {
+  FeeType type = 1;
+  google.protobuf.StringValue size = 2;
+  google.protobuf.StringValue sourceAccountId = 3;
+  google.protobuf.StringValue sourceWalletId = 4;
+  google.protobuf.StringValue targetAccountId = 5;
+  google.protobuf.StringValue targetWalletId = 6;
+  FeeSizeType sizeType = 7;
+  repeated string assetId = 8;
+}
+
+message LimitOrderFee {
+  FeeType type = 1;
+  google.protobuf.StringValue makerSize = 2;
+  google.protobuf.StringValue takerSize = 3;
+  google.protobuf.StringValue sourceAccountId = 4;
+  google.protobuf.StringValue sourceWalletId = 5;
+  google.protobuf.StringValue targetAccountId = 6;
+  google.protobuf.StringValue targetWalletId = 7;
+  FeeSizeType makerSizeType = 8;
+  FeeSizeType takerSizeType = 9;
+  repeated string assetId = 10;
+  google.protobuf.StringValue makerFeeModificator = 11;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.swisschain.matching.engine.messages.incoming";
+option java_outer_classname = "IncomingApi";
+option objc_class_prefix = "API";
+
+package com.swisschain.grpc.incoming.api;
+
+import "IncomingMessages.proto";
+import "google/protobuf/empty.proto";
+
+service CashService {
+    rpc CashInOut(com.swisschain.grpc.messages.incoming.CashInOutOperation) returns (com.swisschain.grpc.messages.incoming.Response) {}
+    rpc CashTransfer(com.swisschain.grpc.messages.incoming.CashTransferOperation) returns (com.swisschain.grpc.messages.incoming.Response) {}
+    rpc ReservedCashInOut(com.swisschain.grpc.messages.incoming.ReservedCashInOutOperation) returns (com.swisschain.grpc.messages.incoming.Response) {}
+}
+
+service TradingService {
+    rpc MarketOrder(com.swisschain.grpc.messages.incoming.MarketOrder) returns (com.swisschain.grpc.messages.incoming.MarketOrderResponse) {}
+    rpc LimitOrder(com.swisschain.grpc.messages.incoming.LimitOrder) returns (com.swisschain.grpc.messages.incoming.Response) {}
+    rpc CancelLimitOrder(com.swisschain.grpc.messages.incoming.LimitOrderCancel) returns (com.swisschain.grpc.messages.incoming.Response) {}
+    rpc MassCancelLimitOrder(com.swisschain.grpc.messages.incoming.LimitOrderMassCancel) returns (com.swisschain.grpc.messages.incoming.Response) {}
+
+    rpc MultiLimitOrder(com.swisschain.grpc.messages.incoming.MultiLimitOrder) returns (com.swisschain.grpc.messages.incoming.MultiLimitOrderResponse) {}
+}
