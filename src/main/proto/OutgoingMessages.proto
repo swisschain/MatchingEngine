@@ -28,11 +28,13 @@ message Header {
 message BalanceUpdate {
     string walletId = 1;
     string assetId = 2;
-    uint64 walletVersion = 3;
-    string oldBalance = 4;
-    string newBalance = 5;
-    string oldReserved = 6;
-    string newReserved = 7;
+    string oldBalance = 3;
+    string newBalance = 4;
+    string oldReserved = 5;
+    string newReserved = 6;
+    string brokerId = 7;
+    string accountId = 8;
+    uint64 walletVersion = 9;
 }
 
 message Fee {
@@ -81,6 +83,9 @@ message CashInEvent {
         string assetId = 2;
         string volume = 3;
         repeated Fee fees = 4;
+        string brokerId = 5;
+        string accountId = 6;
+        uint64 walletVersion = 7;
     }
     Header header = 1;
     repeated BalanceUpdate balanceUpdates = 2;
@@ -93,6 +98,9 @@ message CashOutEvent {
         string assetId = 2;
         string volume = 3;
         repeated Fee fees = 4;
+        string brokerId = 5;
+        string accountId = 6;
+        uint64 walletVersion = 7;
     }
     Header header = 1;
     repeated BalanceUpdate balanceUpdates = 2;
@@ -107,6 +115,9 @@ message CashTransferEvent {
         string overdraftLimit = 4;
         string assetId = 5;
         repeated Fee fees = 6;
+        string brokerId = 7;
+        string accountId = 8;
+        uint64 walletVersion = 9;
     }
     Header header = 1;
     repeated BalanceUpdate balanceUpdates = 2;
@@ -201,6 +212,9 @@ message ExecutionEvent {
         google.protobuf.Timestamp expiryTime = 24;
         string parentExternalId = 25;
         string childExternalId = 26;
+        string brokerId = 27;
+        string accountId = 28;
+        uint64 walletVersion = 29;
     }
     Header header = 1;
     repeated BalanceUpdate balanceUpdates = 2;
