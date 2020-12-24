@@ -28,10 +28,11 @@ message Header {
 message BalanceUpdate {
     string walletId = 1;
     string assetId = 2;
-    string oldBalance = 3;
-    string newBalance = 4;
-    string oldReserved = 5;
-    string newReserved = 6;
+    uint64 walletVersion = 3;
+    string oldBalance = 4;
+    string newBalance = 5;
+    string oldReserved = 6;
+    string newReserved = 7;
 }
 
 message Fee {
@@ -204,4 +205,20 @@ message ExecutionEvent {
     Header header = 1;
     repeated BalanceUpdate balanceUpdates = 2;
     repeated Order orders = 3;
+}
+
+message OrderBookSnapshot {
+  string asset = 1;
+  bool isBuy = 2;
+  google.protobuf.Timestamp timestamp = 3;
+
+  message OrderBookLevel {
+    string price = 1;
+    string volume = 2;
+    string walletId = 3;
+    string orderId = 4;
+  }
+
+  repeated OrderBookLevel levels = 4;
+  string brokerId = 5;
 }

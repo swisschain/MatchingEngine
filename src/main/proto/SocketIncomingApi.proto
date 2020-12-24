@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.swisschain.messages.incoming.socket";
+option java_outer_classname = "SocketIncomingApi";
+option objc_class_prefix = "API";
+
+package com.swisschain.messages.incoming.socket;
+
+import "SocketIncomingMessages.proto";
+
+service OrderCancelService {
+    rpc MultiLimitOrderCancel(com.swisschain.messages.incoming.socket.MultiLimitOrderCancel) returns (com.swisschain.messages.incoming.socket.Response) {}
+    rpc MassCancelLimitOrder(com.swisschain.messages.incoming.socket.LimitOrderMassCancel) returns (com.swisschain.messages.incoming.socket.Response) {}
+}

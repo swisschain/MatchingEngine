@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.swisschain.messages.incoming.grpc";
+option java_outer_classname = "GrpcIncomingApi";
+option objc_class_prefix = "API";
+
+package com.swisschain.messages.incoming.grpc;
+
+import "GrpcIncomingMessages.proto";
+
+service CashService {
+    rpc CashInOut(com.swisschain.messages.incoming.grpc.CashInOutOperation) returns (com.swisschain.messages.incoming.grpc.CashInOutOperationResponse) {}
+    rpc CashTransfer(com.swisschain.messages.incoming.grpc.CashTransferOperation) returns (com.swisschain.messages.incoming.grpc.CashTransferOperationResponse) {}
+    rpc ReservedCashInOut(com.swisschain.messages.incoming.grpc.ReservedCashInOutOperation) returns (com.swisschain.messages.incoming.grpc.ReservedCashInOutOperationResponse) {}
+}
+
+service TradingService {
+    rpc MarketOrder(com.swisschain.messages.incoming.grpc.MarketOrder) returns (com.swisschain.messages.incoming.grpc.MarketOrderResponse) {}
+    rpc LimitOrder(com.swisschain.messages.incoming.grpc.LimitOrder) returns (com.swisschain.messages.incoming.grpc.LimitOrderResponse) {}
+    rpc CancelLimitOrder(com.swisschain.messages.incoming.grpc.LimitOrderCancel) returns (com.swisschain.messages.incoming.grpc.LimitOrderCancelResponse) {}
+    rpc MultiLimitOrder(com.swisschain.messages.incoming.grpc.MultiLimitOrder) returns (com.swisschain.messages.incoming.grpc.MultiLimitOrderResponse) {}
+}

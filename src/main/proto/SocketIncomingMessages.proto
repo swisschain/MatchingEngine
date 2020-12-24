@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package com.swisschain.messages.incoming.socket;
+
+option java_package = "com.swisschain.messages.incoming.socket";
+option java_outer_classname = "SocketIncomingMessages";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+// Responses
+message Response {
+  string id = 1;
+  google.protobuf.StringValue matchingEngineId = 2;
+  Status status = 3;
+  google.protobuf.StringValue statusReason = 4;
+  google.protobuf.StringValue messageId = 5;
+}
+
+enum Status {
+  UNKNOWN = 0;
+  MESSAGE_PROCESSING_DISABLED = 1;
+  OK = 2;
+  LOW_BALANCE = 401;
+  DISABLED_ASSET = 403;
+  UNKNOWN_ASSET = 410;
+  DUPLICATE = 430;
+  BAD_REQUEST = 400;
+  RUNTIME = 500;
+
+  REPLACED = 421;
+  NOT_FOUND_PREVIOUS = 422;
+  RESERVED_VOLUME_HIGHER_THAN_BALANCE = 414;
+  LIMIT_ORDER_NOT_FOUND = 415;
+  BALANCE_LOWER_THAN_RESERVED = 416;
+  LEAD_TO_NEGATIVE_SPREAD = 417;
+  TOO_SMALL_VOLUME = 418;
+  INVALID_FEE = 419;
+  INVALID_PRICE = 420;
+  NO_LIQUIDITY = 411;
+  NOT_ENOUGH_FUNDS = 412;
+  INVALID_VOLUME_ACCURACY = 431;
+  INVALID_PRICE_ACCURACY = 432;
+  INVALID_VOLUME = 434;
+  TOO_HIGH_PRICE_DEVIATION = 435;
+  INVALID_ORDER_VALUE = 436;
+  NEGATIVE_OVERDRAFT_LIMIT = 433;
+}
+
+message MultiLimitOrderCancel {
+  string id = 1;
+  string brokerId = 2;
+  string accountId = 3;
+  string walletId = 4;
+  string assetPairId = 5;
+  bool isBuy = 6;
+  google.protobuf.Timestamp timestamp = 7;
+  google.protobuf.StringValue messageId = 8;
+}
+
+message LimitOrderMassCancel {
+  string id = 1;
+  string brokerId = 2;
+  google.protobuf.StringValue walletId = 3;
+  google.protobuf.StringValue assetPairId = 4;
+  google.protobuf.BoolValue isBuy = 5;
+  google.protobuf.StringValue messageId = 6;
+}
