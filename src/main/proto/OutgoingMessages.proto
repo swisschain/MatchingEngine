@@ -6,6 +6,7 @@ import "google/protobuf/timestamp.proto";
 
 option java_package = "com.lykke.matching.engine.messages.outgoing";
 option java_outer_classname = "OutgoingMessages";
+option csharp_namespace = "Antares.ME.Contracts.OutgoingMessages";
 
 message Header {
     enum MessageType {
