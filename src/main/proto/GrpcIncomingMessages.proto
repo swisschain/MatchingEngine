@@ -14,23 +14,21 @@ message CashInOutOperation {
   string brokerId = 2;
   string accountId = 3;
   string walletId = 4;
-  uint64 walletVersion = 5;
-  string assetId = 6;
-  string volume = 7;
-  string description = 8;
-  repeated Fee fees = 9;
-  google.protobuf.Timestamp timestamp = 10;
-  google.protobuf.StringValue messageId = 11;
+  string assetId = 5;
+  string volume = 6;
+  string description = 7;
+  repeated Fee fees = 8;
+  google.protobuf.Timestamp timestamp = 9;
+  google.protobuf.StringValue messageId = 10;
 }
 
 message CashInOutOperationResponse {
   string id = 1;
-  uint64 walletVersion = 2;
-  Status status = 3;
-  google.protobuf.StringValue statusReason = 4;
-  google.protobuf.StringValue matchingEngineId = 5;
-  google.protobuf.StringValue messageId = 6;
-  Balance balance = 7;
+  Status status = 2;
+  google.protobuf.StringValue statusReason = 3;
+  google.protobuf.StringValue matchingEngineId = 4;
+  google.protobuf.StringValue messageId = 5;
+  Balance balance = 6;
 }
 
 message Balance {
@@ -43,25 +41,23 @@ message CashTransferOperation {
   string brokerId = 2;
   string accountId = 3;
   string fromWalletId = 4;
-  uint64 fromWalletVersion = 5;
-  string toWalletId = 6;
-  string assetId = 7;
-  string volume = 8;
-  string description = 9;
-  google.protobuf.StringValue overdraftLimit = 10;
-  repeated Fee fees = 11;
-  google.protobuf.Timestamp timestamp = 12;
-  google.protobuf.StringValue messageId = 13;
+  string toWalletId = 5;
+  string assetId = 6;
+  string volume = 7;
+  string description = 8;
+  google.protobuf.StringValue overdraftLimit = 9;
+  repeated Fee fees = 10;
+  google.protobuf.Timestamp timestamp = 11;
+  google.protobuf.StringValue messageId = 12;
 }
 
 message CashTransferOperationResponse {
   string id = 1;
-  uint64 walletVersion = 2;
-  Status status = 3;
-  google.protobuf.StringValue statusReason = 4;
-  google.protobuf.StringValue matchingEngineId = 5;
-  google.protobuf.StringValue messageId = 6;
-  Balance balance = 7;
+  Status status = 2;
+  google.protobuf.StringValue statusReason = 3;
+  google.protobuf.StringValue matchingEngineId = 4;
+  google.protobuf.StringValue messageId = 5;
+  Balance balance = 6;
 }
 
 message ReservedCashInOutOperation {
@@ -69,22 +65,20 @@ message ReservedCashInOutOperation {
   string brokerId = 2;
   string accountId = 3;
   string walletId = 4;
-  uint64 walletVersion = 5;
-  string assetId = 6;
-  string reservedVolume = 7;
-  string description = 8;
-  google.protobuf.Timestamp timestamp = 9;
-  google.protobuf.StringValue messageId = 10;
+  string assetId = 5;
+  string reservedVolume = 6;
+  string description = 7;
+  google.protobuf.Timestamp timestamp = 8;
+  google.protobuf.StringValue messageId = 9;
 }
 
 message ReservedCashInOutOperationResponse {
   string id = 1;
-  uint64 walletVersion = 2;
-  Status status = 3;
-  google.protobuf.StringValue statusReason = 4;
-  google.protobuf.StringValue matchingEngineId = 5;
-  google.protobuf.StringValue messageId = 6;
-  Balance balance = 7;
+  Status status = 2;
+  google.protobuf.StringValue statusReason = 3;
+  google.protobuf.StringValue matchingEngineId = 4;
+  google.protobuf.StringValue messageId = 5;
+  Balance balance = 6;
 }
 
 message LimitOrder {
